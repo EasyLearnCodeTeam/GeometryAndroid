@@ -1,6 +1,5 @@
 package com.easyleancode.geometry.apps;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.easyleancode.geometry.R;
 import com.easyleancode.geometry.adapters.ExpandableAdapter;
+import com.easyleancode.geometry.models.Shape;
 import com.easyleancode.geometry.utils.Utils;
 
 import java.util.ArrayList;
@@ -29,10 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.tool_bar)
     Toolbar toolBar;
-    @Bind(R.id.image_help)
-    RelativeLayout imageHelp;
-    @Bind(R.id.close_help)
-    ImageView closeHelp;
+    @Bind(R.id.image_teacher)
+    ImageView imageTeacher;
     @Bind(R.id.recycle_shape)
     RecyclerView recyclerShape;
     @Bind(R.id.btn_add)
@@ -79,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerShape.setHasFixedSize(true);
         recyclerShape.setLayoutManager(layoutManager);
-        setExpandableAdapter(new ArrayList<>());
+        collections = new ArrayList<>();
+        setExpandableAdapter(collections);
     }
 
     private void setExpandableAdapter(List<Object> collections) {
@@ -89,32 +87,46 @@ public class MainActivity extends AppCompatActivity {
         } else {
             expandableAdapter.setCollections(collections);
         }
+        imageTeacher.setVisibility(collections.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
-    @OnClick(R.id.close_help)
-    protected void closeHelpNote() {
-        imageHelp.setVisibility(View.GONE);
+    public void onCollectionEmpty() {
+        imageTeacher.setVisibility(View.VISIBLE);
+        collections.clear();
     }
 
     @OnClick({R.id.btn_add, R.id.popup_menu})
     protected void handlerPopupMenu() {
         if (popupMenu.getVisibility() == View.VISIBLE) {
             popupMenu.setVisibility(View.GONE);
-            btnAdd.setBackgroundTintList(getColor(R.color.main_red));
+            btnAdd.setBackgroundTintList(Utils.getColor(this, R.color.main_red));
             btnAdd.setImageDrawable(Utils.getDrawable(this, R.drawable.plus_float_button));
         } else {
             popupMenu.setVisibility(View.VISIBLE);
-            btnAdd.setBackgroundTintList(getColor(R.color.main_green));
+            btnAdd.setBackgroundTintList(Utils.getColor(this, R.color.main_green));
             btnAdd.setImageDrawable(Utils.getDrawable(this, R.drawable.sub_float_button));
         }
     }
 
     @OnClick({R.id.angle, R.id.surface, R.id.line, R.id.segment, R.id.shape})
     protected void addElement(View view) {
-
-    }
-
-    private ColorStateList getColor(int resId) {
-        return ColorStateList.valueOf(getResources().getColor(resId));
+        switch (view.getId()) {
+            case R.id.angle:
+                break;
+            case R.id.surface:
+                break;
+            case R.id.line:
+                break;
+            case R.id.segment:
+                break;
+            case R.id.shape:
+                collections.add(new Shape("", null));
+                if (expandableAdapter != null) {
+                    expandableAdapter.setAddedPosition(collections.size() - 1);
+                }
+                break;
+        }
+        setExpandableAdapter(collections);
+        handlerPopupMenu();
     }
 }
