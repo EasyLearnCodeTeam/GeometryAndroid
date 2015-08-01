@@ -1,3 +1,10 @@
 <resources>
+    <dimen name="small">4dp</dimen>
+    <dimen name="small_plus">8dp</dimen>
+    <dimen name="middle_sub">12dp</dimen>
     <dimen name="middle">16dp</dimen>
+    <dimen name="large">28dp</dimen>
+    <dimen name="button_width">50dp</dimen>
+    <dimen name="padding_menu">96dp</dimen>
+    <dimen name="small_float_height">56dp</dimen>
 </resources>
