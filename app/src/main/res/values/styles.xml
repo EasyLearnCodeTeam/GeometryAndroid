@@ -14,7 +14,7 @@
         <item name="colorControlActivated">@color/main_green</item>
         <item name="colorControlHighlight">@color/main_green</item>
         <item name="colorPrimary">@color/main_green</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorHint">@color/gray</item>
     </style>
 </resources>
