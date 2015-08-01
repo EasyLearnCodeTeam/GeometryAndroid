@@ -9,7 +9,7 @@
         <item name="android:windowContentOverlay">@null</item>
 
         <!-- Base color -->
-        <item name="colorAccent">@color/main_red</item>
+        <item name="colorAccent">@color/main_green</item>
         <item name="colorControlNormal">@color/main_green</item>
         <item name="colorControlActivated">@color/main_green</item>
         <item name="colorControlHighlight">@color/main_green</item>
