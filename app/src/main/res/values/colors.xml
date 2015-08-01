@@ -5,4 +5,5 @@
     <color name="white">#FFFFFF</color>
     <color name="gray">#AEAEAE</color>
     <color name="over_lay">#CCFFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

@@ -7,4 +7,5 @@
     <dimen name="button_width">50dp</dimen>
     <dimen name="padding_menu">96dp</dimen>
     <dimen name="small_float_height">56dp</dimen>
+    <dimen name="text_size_middle">16sp</dimen>
 </resources>
