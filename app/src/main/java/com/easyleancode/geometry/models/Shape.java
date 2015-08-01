@@ -10,6 +10,10 @@ public class Shape implements Serializable {
     // isCollapse = null: have no element
     private Boolean isCollapsed;
 
+    public Shape() {
+        this("", null);
+    }
+
     public Shape(String name, List<ElementRelation> elements) {
         this.setName(name);
         this.setElements(elements);

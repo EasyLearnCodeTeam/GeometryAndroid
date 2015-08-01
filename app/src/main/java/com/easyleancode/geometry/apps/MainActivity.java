@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.segment:
                 break;
             case R.id.shape:
-                collections.add(new Shape("", null));
+                collections.add(new Shape());
                 if (expandableAdapter != null) {
                     expandableAdapter.setAddedPosition(collections.size() - 1);
                 }
