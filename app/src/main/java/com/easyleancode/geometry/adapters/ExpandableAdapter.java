@@ -3,7 +3,6 @@ package com.easyleancode.geometry.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.easyleancode.geometry.R;
 import com.easyleancode.geometry.apps.MainActivity;
@@ -38,7 +38,6 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        Log.d("Test", "run create " + viewType);
         if (viewType == SHAPE_TYPE) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_element_shape, viewGroup, false);
             return new ShapeViewHolder(view);
@@ -49,7 +48,6 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Log.d("Test", "on bind view " + position);
         Object object = collections.get(position);
         if (object instanceof Shape) {
             final Shape shape = (Shape) object;
@@ -71,6 +69,18 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int adapterPosition, long id) {
                     shape.setName(shapeTypeAdapter.getItem(adapterPosition));
+                    ElementAdapter elementAdapter = new ElementAdapter(context, shape.getElements(), new ElementAdapter.OnAddElementListener() {
+                        @Override
+                        public void onAddElement(int count, View view) {
+                            shapeViewHolder.elementLayout.addView(view, count - 2);
+                        }
+                    });
+                    final int adapterCount = elementAdapter.getCount();
+                    shapeViewHolder.elementLayout.removeAllViews();
+                    for (int i = 0; i < adapterCount; i++) {
+                        View item = elementAdapter.getView(i, null, null);
+                        shapeViewHolder.elementLayout.addView(item);
+                    }
                 }
             });
             shapeViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +88,7 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
                 public void onClick(View v) {
                     collections.remove(position);
                     addedPosition = -1;
+                    shapeViewHolder.elementLayout.removeAllViews();
                     if (getItemCount() == 0) {
                         ((MainActivity) context).onCollectionEmpty();
                     }
@@ -94,16 +105,11 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("Test", "get type " + position);
         Object object = collections.get(position);
         if (object instanceof Shape) {
             return SHAPE_TYPE;
         }
         return ELEMENT_TYPE;
-    }
-
-    public List<Object> getCollections() {
-        return collections;
     }
 
     @Override
@@ -125,8 +131,8 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
         AutoCompleteTextView shapeType;
         @Bind(R.id.btn_delete)
         ImageView btnDelete;
-        @Bind(R.id.recycle_element)
-        RecyclerView recycleElement;
+        @Bind(R.id.element_layout)
+        LinearLayout elementLayout;
 
 
         public ShapeViewHolder(View itemView) {

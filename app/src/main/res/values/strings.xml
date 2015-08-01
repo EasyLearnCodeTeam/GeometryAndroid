@@ -9,6 +9,7 @@
     <string name="menu_shape">Hình</string>
     <string name="menu_segment">Đoạn thẳng</string>
     <string name="menu_surface">Mặt phẳng</string>
+    <string name="add">Thêm</string>
     <array name="shapes">
         <item name="pyramid">Hình chóp</item>
         <item name="prismatic">Hình lăng trụ</item>

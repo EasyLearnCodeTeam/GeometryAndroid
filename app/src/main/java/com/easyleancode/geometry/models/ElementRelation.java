@@ -24,6 +24,10 @@ public class ElementRelation implements Serializable {
         this(owner, relationship, target, "");
     }
 
+    public ElementRelation() {
+        this("", "", "");
+    }
+
     public String getOwner() {
         return owner;
     }
