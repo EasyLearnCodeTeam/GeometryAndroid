@@ -65,6 +65,129 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/popup_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/over_lay"
+        android:clickable="true"
+        android:gravity="bottom|right"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_menu"
+        android:paddingRight="@dimen/large"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/small_float_height"
+            android:gravity="right|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_plus"
+                android:text="@string/menu_angle" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/angle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus_float_button"
+                app:backgroundTint="@color/main_light_green"
+                app:borderWidth="0dp"
+                app:elevation="2dp"
+                app:fabSize="mini" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/small_float_height"
+            android:gravity="right|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_plus"
+                android:text="@string/menu_surface" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/surface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus_float_button"
+                app:backgroundTint="@color/main_light_green"
+                app:borderWidth="0dp"
+                app:elevation="2dp"
+                app:fabSize="mini" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/small_float_height"
+            android:gravity="right|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_plus"
+                android:text="@string/menu_line" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus_float_button"
+                app:backgroundTint="@color/main_light_green"
+                app:borderWidth="0dp"
+                app:elevation="2dp"
+                app:fabSize="mini" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/small_float_height"
+            android:gravity="right|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_plus"
+                android:text="@string/menu_segment" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/segment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus_float_button"
+                app:backgroundTint="@color/main_light_green"
+                app:borderWidth="0dp"
+                app:elevation="2dp"
+                app:fabSize="mini" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/small_float_height"
+            android:gravity="right|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_plus"
+                android:text="@string/menu_shape" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus_float_button"
+                app:backgroundTint="@color/main_light_green"
+                app:borderWidth="0dp"
+                app:elevation="2dp"
+                app:fabSize="mini" />
+        </LinearLayout>
+    </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
@@ -73,6 +196,8 @@
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/middle"
         android:src="@drawable/plus_float_button"
+        app:backgroundTint="@color/main_red"
         app:borderWidth="0dp"
-        app:elevation="6dp" />
+        app:elevation="6dp"
+        app:fabSize="normal" />
 </RelativeLayout>
