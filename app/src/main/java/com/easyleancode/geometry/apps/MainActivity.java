@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.easyleancode.geometry.R;
 import com.easyleancode.geometry.adapters.ExpandableAdapter;
+import com.easyleancode.geometry.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton btnAdd;
     @Bind(R.id.popup_menu)
     LinearLayout popupMenu;
-    @Bind(R.id.angle)
-    FloatingActionButton btnAngle;
 
     LinearLayoutManager layoutManager;
     ExpandableAdapter expandableAdapter;
@@ -97,15 +96,22 @@ public class MainActivity extends AppCompatActivity {
         imageHelp.setVisibility(View.GONE);
     }
 
-    @OnClick(R.id.btn_add)
+    @OnClick({R.id.btn_add, R.id.popup_menu})
     protected void handlerPopupMenu() {
         if (popupMenu.getVisibility() == View.VISIBLE) {
             popupMenu.setVisibility(View.GONE);
             btnAdd.setBackgroundTintList(getColor(R.color.main_red));
+            btnAdd.setImageDrawable(Utils.getDrawable(this, R.drawable.plus_float_button));
         } else {
             popupMenu.setVisibility(View.VISIBLE);
             btnAdd.setBackgroundTintList(getColor(R.color.main_green));
+            btnAdd.setImageDrawable(Utils.getDrawable(this, R.drawable.sub_float_button));
         }
+    }
+
+    @OnClick({R.id.angle, R.id.surface, R.id.line, R.id.segment, R.id.shape})
+    protected void addElement(View view) {
+
     }
 
     private ColorStateList getColor(int resId) {
