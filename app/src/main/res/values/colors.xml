@@ -1,5 +1,8 @@
 <resources>
     <color name="main_green">#006A67</color>
+    <color name="main_light_green">#439C9A</color>
     <color name="main_red">#E53935</color>
     <color name="white">#FFFFFF</color>
+    <color name="gray">#AEAEAE</color>
+    <color name="over_lay">#CCFFFFFF</color>
 </resources>
