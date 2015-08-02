@@ -1,13 +1,15 @@
 package com.easyleancode.geometry.adapters;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.easyleancode.geometry.R;
@@ -59,8 +61,10 @@ public class ElementAdapter extends BaseAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.item_element_two, parent, false);
         final ElementRelation element = elements.get(position);
         final ViewHolder viewHolder = new ViewHolder(view);
+        viewHolder.txtElementType.setText("".equals(element.getRelationship()) ? Constant.PYRAMID_TOP : element.getRelationship());
+
         if (position == getCount() - 1) {
-            viewHolder.imageElement.setImageDrawable(Utils.getDrawable(context, R.mipmap.app_icon));
+            viewHolder.imageElement.setImageDrawable(Utils.getDrawable(context, R.drawable.plus_card));
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,17 +76,18 @@ public class ElementAdapter extends BaseAdapter {
                 }
             });
             viewHolder.txtLayout.setVisibility(View.GONE);
+            viewHolder.txtElementCustom.setVisibility(View.GONE);
         } else {
-            viewHolder.imageElement.setImageDrawable(Utils.getDrawable(context, R.mipmap.app_icon));
+            viewHolder.imageElement.setImageDrawable(Utils.getDrawable(context, R.drawable.sub_card));
+            viewHolder.txtElementCustom.setText(element.getTarget());
             viewHolder.txtElementValue.setText(element.getValue());
             viewHolder.txtElementValue.setVisibility(View.VISIBLE);
-            if (Constant.PYRAMID_TOP.equalsIgnoreCase(element.getRelationship())
-                    || Constant.PYRAMID_BOTTOM.equalsIgnoreCase(element.getRelationship())) {
-                viewHolder.txtElementType.setVisibility(View.VISIBLE);
+            viewHolder.txtLayout.setVisibility(View.VISIBLE);
+            if (position == 0 || position == 1) {
+                viewHolder.txtLayout.setVisibility(View.GONE);
                 viewHolder.txtElementCustom.setVisibility(View.GONE);
                 viewHolder.btnDelete.setVisibility(View.GONE);
             } else {
-                viewHolder.txtElementType.setVisibility(View.GONE);
                 viewHolder.txtElementCustom.setVisibility(View.VISIBLE);
                 viewHolder.btnDelete.setVisibility(View.VISIBLE);
                 viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -95,19 +100,44 @@ public class ElementAdapter extends BaseAdapter {
                     }
                 });
             }
-            viewHolder.txtLayout.setVisibility(View.VISIBLE);
-
         }
-        viewHolder.txtElementType.setText(element.getRelationship());
+        viewHolder.txtElementValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                element.setValue(viewHolder.txtElementValue.getText().toString());
+            }
+        });
+        viewHolder.txtElementCustom.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                element.setTarget(viewHolder.txtElementCustom.getText().toString());
+            }
+        });
         return view;
     }
 
     public List<ElementRelation> getElements() {
-        List<ElementRelation> list = new ArrayList<>();
-        list.addAll(elements);
-        // Remove button `Add`
-        list.remove(list.size() - 1);
-        return list;
+        return elements;
     }
 
     class ViewHolder {
@@ -120,7 +150,7 @@ public class ElementAdapter extends BaseAdapter {
         @Bind(R.id.txt_element_value)
         EditText txtElementValue;
         @Bind(R.id.txt_layout)
-        RelativeLayout txtLayout;
+        LinearLayout txtLayout;
         @Bind(R.id.btn_delete)
         ImageView btnDelete;
 
