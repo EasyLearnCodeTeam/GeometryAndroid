@@ -40,7 +40,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/middle"
                     android:padding="@dimen/middle"
                     android:text="@string/hint_title"
                     android:textSize="@dimen/text_size_middle" />
@@ -50,7 +49,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/middle"
-                    android:layout_marginRight="@dimen/middle" />
+                    android:layout_marginRight="@dimen/middle"
+                    android:paddingTop="@dimen/middle" />
             </LinearLayout>
 
             <FrameLayout
@@ -125,13 +125,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/small_plus"
-                android:text="@string/menu_line" />
+                android:text="@string/menu_archor" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/duongthang_icon"
+                android:src="@drawable/diem"
                 app:backgroundTint="@color/main_light_green"
                 app:borderWidth="0dp"
                 app:elevation="2dp"

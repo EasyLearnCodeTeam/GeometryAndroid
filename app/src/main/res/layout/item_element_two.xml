@@ -20,9 +20,36 @@
         android:layout_marginRight="@dimen/middle_sub" />
 
     <EditText
-        android:id="@+id/txt_element_value"
+        android:id="@+id/txt_element_custom"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/middle_sub"
+        android:layout_marginRight="@dimen/middle_sub"
+        android:background="@drawable/edit_text_border"
+        android:inputType="textCapSentences"
+        android:text=""
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/txt_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/edit_text_border"
-        android:inputType="textCapCharacters" />
+        android:background="@drawable/shape_border">
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_width"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/delete" />
+
+        <EditText
+            android:id="@+id/txt_element_value"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/btn_delete"
+            android:background="@android:color/transparent"
+            android:inputType="textCapCharacters" />
+    </RelativeLayout>
 </LinearLayout>
