@@ -1,23 +1,24 @@
 package com.easyleancode.geometry.models;
 
+import com.easyleancode.geometry.utils.Constant;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shape implements Serializable {
-    private ShapeType type;
+    private String type;
     private String name;
     private List<ElementRelation> elements;
-    // isCollapse = null: have no element
-    private Boolean isCollapsed;
 
     public Shape() {
-        this("", null);
+        this("", "", null);
     }
 
-    public Shape(String name, List<ElementRelation> elements) {
+    public Shape(String type, String name, List<ElementRelation> elements) {
+        this.setType(type);
         this.setName(name);
         this.setElements(elements);
-        this.setIsCollapsed(elements == null ? null : false);
     }
 
     public String getName() {
@@ -36,11 +37,21 @@ public class Shape implements Serializable {
         this.elements = elements;
     }
 
-    public Boolean isCollapsed() {
-        return isCollapsed;
+    public String getType() {
+        return type;
     }
 
-    public void setIsCollapsed(Boolean isCollapsed) {
-        this.isCollapsed = isCollapsed;
+    public void setType(String type) {
+        this.type = type;
+        if (Constant.PYRAMID.equalsIgnoreCase(this.type)) {
+            elements = new ArrayList<>();
+            elements.add(new ElementRelation(this.name, Constant.PYRAMID_TOP, ""));
+            elements.add(new ElementRelation(this.name, Constant.PYRAMID_BOTTOM, ""));
+        } else if (Constant.PRISMATIC.equalsIgnoreCase(this.type)) {
+            // TODO: set value for prismatic instinct hardcode
+            elements = new ArrayList<>();
+            elements.add(new ElementRelation(this.name, Constant.PYRAMID_TOP, ""));
+            elements.add(new ElementRelation(this.name, Constant.PYRAMID_BOTTOM, ""));
+        }
     }
 }
