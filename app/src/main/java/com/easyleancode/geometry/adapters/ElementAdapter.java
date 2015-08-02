@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easyleancode.geometry.R;
@@ -75,6 +75,7 @@ public class ElementAdapter extends BaseAdapter {
                     }
                 }
             });
+            viewHolder.txtCachDeu.setVisibility(View.GONE);
             viewHolder.txtLayout.setVisibility(View.GONE);
             viewHolder.txtElementCustom.setVisibility(View.GONE);
         } else {
@@ -84,10 +85,11 @@ public class ElementAdapter extends BaseAdapter {
             viewHolder.txtElementValue.setVisibility(View.VISIBLE);
             viewHolder.txtLayout.setVisibility(View.VISIBLE);
             if (position == 0 || position == 1) {
-                viewHolder.txtLayout.setVisibility(View.GONE);
+                viewHolder.txtCachDeu.setVisibility(View.GONE);
                 viewHolder.txtElementCustom.setVisibility(View.GONE);
                 viewHolder.btnDelete.setVisibility(View.GONE);
             } else {
+                viewHolder.txtCachDeu.setVisibility(View.VISIBLE);
                 viewHolder.txtElementCustom.setVisibility(View.VISIBLE);
                 viewHolder.btnDelete.setVisibility(View.VISIBLE);
                 viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -150,9 +152,11 @@ public class ElementAdapter extends BaseAdapter {
         @Bind(R.id.txt_element_value)
         EditText txtElementValue;
         @Bind(R.id.txt_layout)
-        LinearLayout txtLayout;
+        RelativeLayout txtLayout;
         @Bind(R.id.btn_delete)
         ImageView btnDelete;
+        @Bind(R.id.txt_cach_deu)
+        TextView txtCachDeu;
 
         public ViewHolder(View itemView) {
             ButterKnife.bind(this, itemView);
