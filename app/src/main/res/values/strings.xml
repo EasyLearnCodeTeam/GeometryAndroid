@@ -5,13 +5,11 @@
     <string name="hint_title">Bạn hãy nhấn nút cộng (+) để nhập giả thiết mà bài toán đã đưa ra</string>
     <string name="hint_input_type">Chọn loại hình học</string>
     <string name="menu_angle">Góc</string>
-    <string name="menu_line">Đường thẳng</string>
+    <string name="menu_archor">Điểm</string>
     <string name="menu_shape">Hình</string>
-    <string name="menu_segment">Đoạn thẳng</string>
+    <string name="menu_segment">Đoạn hoặc đường thẳng</string>
     <string name="menu_surface">Mặt phẳng</string>
     <string name="add">Thêm</string>
-    <array name="shapes">
-        <item name="pyramid">Hình chóp</item>
-        <item name="prismatic">Hình lăng trụ</item>
-    </array>
+    <string name="action_view">Kết quả</string>
+    <string name="noti_please_input_one">Chưa nhập dữ liệu cho bài toán</string>
 </resources>
