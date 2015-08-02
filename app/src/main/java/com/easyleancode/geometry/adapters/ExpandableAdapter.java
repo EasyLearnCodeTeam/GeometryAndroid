@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,14 +17,17 @@ import com.easyleancode.geometry.R;
 import com.easyleancode.geometry.apps.MainActivity;
 import com.easyleancode.geometry.models.ElementRelation;
 import com.easyleancode.geometry.models.Shape;
+import com.easyleancode.geometry.utils.Constant;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
-    private List<Object> collections;
+    private ArrayList<Serializable> collections;
     private Context context;
     private int addedPosition = -1;
 
@@ -31,7 +35,7 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
     private static final int ELEMENT_TYPE = 2;
 
 
-    public ExpandableAdapter(Context context, List<Object> collections) {
+    public ExpandableAdapter(Context context, ArrayList<Serializable> collections) {
         this.context = context;
         this.collections = collections;
     }
@@ -52,12 +56,12 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
         if (object instanceof Shape) {
             final Shape shape = (Shape) object;
             final ShapeViewHolder shapeViewHolder = (ShapeViewHolder) viewHolder;
-            shapeViewHolder.shapeType.setText(shape.getName());
-            String[] shapes = context.getResources().getStringArray(R.array.shapes);
+            shapeViewHolder.shapeType.setText(shape.getType());
+            String[] shapes = Constant.gethapeTypes();
             final ArrayAdapter<String> shapeTypeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, shapes);
             shapeViewHolder.shapeType.setAdapter(shapeTypeAdapter);
             if (position == addedPosition) {
-
+                // TODO: Show dropdown popup
             }
             shapeViewHolder.shapeType.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,11 +72,18 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
             shapeViewHolder.shapeType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int adapterPosition, long id) {
-                    shape.setName(shapeTypeAdapter.getItem(adapterPosition));
-                    ElementAdapter elementAdapter = new ElementAdapter(context, shape.getElements(), new ElementAdapter.OnAddElementListener() {
+                    shape.setType(shapeTypeAdapter.getItem(adapterPosition));
+                    ElementAdapter elementAdapter = new ElementAdapter(context, shape.getElements(), new ElementAdapter.OnChangeElementListener() {
                         @Override
-                        public void onAddElement(int count, View view) {
-                            shapeViewHolder.elementLayout.addView(view, count - 2);
+                        public void onAddElement(View view, int count, List<ElementRelation> elements) {
+                            shapeViewHolder.elementLayout.addView(view, count - 1);
+                            shape.setElements(elements);
+                        }
+
+                        @Override
+                        public void onRemoveElement(int position,List<ElementRelation> elements) {
+                            shapeViewHolder.elementLayout.removeViewAt(position);
+                            shape.setElements(elements);
                         }
                     });
                     final int adapterCount = elementAdapter.getCount();
@@ -81,6 +92,7 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
                         View item = elementAdapter.getView(i, null, null);
                         shapeViewHolder.elementLayout.addView(item);
                     }
+                    shape.setElements(elementAdapter.getElements());
                 }
             });
             shapeViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +111,7 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
         } else {
             ElementRelation elementRelation = (ElementRelation) object;
             ElementViewHolder elementViewHolder = (ElementViewHolder) viewHolder;
-            // TODO
+
         }
     }
 
@@ -117,9 +129,13 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
         return collections.size();
     }
 
-    public void setCollections(List<Object> collections) {
+    public void setCollections(ArrayList<Serializable> collections) {
         this.collections = collections;
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Serializable> getCollections() {
+        return collections;
     }
 
     public void setAddedPosition(int position) {
@@ -142,6 +158,16 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     class ElementViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.owner)
+        EditText owner;
+        @Bind(R.id.relationship)
+        EditText relationship;
+        @Bind(R.id.target)
+        EditText target;
+        @Bind(R.id.text_plus)
+        EditText textPlus;
+        @Bind(R.id.value)
+        EditText value;
 
         public ElementViewHolder(View itemView) {
             super(itemView);
