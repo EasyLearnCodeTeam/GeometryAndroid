@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/small_plus">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
         android:id="@+id/element_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/middle"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/small_plus" />
 
 </LinearLayout>
