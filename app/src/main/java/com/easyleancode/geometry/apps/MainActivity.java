@@ -114,17 +114,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.angle, R.id.surface, R.id.line, R.id.segment, R.id.shape})
+    @OnClick({R.id.angle, R.id.surface, R.id.point, R.id.segment, R.id.shape})
     protected void addElement(View view) {
         switch (view.getId()) {
             case R.id.angle:
-                collections.add(new ElementRelation());
+                collections.add(new ElementRelation(ElementRelation.ANGLE));
                 break;
             case R.id.surface:
+                collections.add(new ElementRelation(ElementRelation.SURFACE));
                 break;
-            case R.id.line:
+            case R.id.point:
+                collections.add(new ElementRelation(ElementRelation.POINT));
                 break;
             case R.id.segment:
+                collections.add(new ElementRelation(ElementRelation.SEGMENT));
                 break;
             case R.id.shape:
                 collections.add(new Shape());

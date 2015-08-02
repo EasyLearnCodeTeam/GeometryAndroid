@@ -3,6 +3,10 @@ package com.easyleancode.geometry.models;
 import java.io.Serializable;
 
 public class ElementRelation implements Serializable {
+    public static final String ANGLE="ANGLE";
+    public static final String POINT="POINT";
+    public static final String SURFACE="SURFACE";
+    public static final String SEGMENT="SEGMENT";
     // Ex: AB vuong goc BC tai D : (AB,VG,BC,D)
     // AB = CD = a : (AB,=,a) + (CD,=,a)
     // I la trung diem BC : (BC,TD,I)
@@ -12,6 +16,7 @@ public class ElementRelation implements Serializable {
     private String relationship;
     private String target;
     private String value;
+    private String type;
 
     public ElementRelation(String owner, String relationship, String target, String value) {
         this.setOwner(owner);
@@ -22,6 +27,10 @@ public class ElementRelation implements Serializable {
 
     public ElementRelation(String owner, String relationship, String target) {
         this(owner, relationship, target, "");
+    }
+
+    public ElementRelation(String type) {
+        this.type = type;
     }
 
     public ElementRelation() {
@@ -58,5 +67,13 @@ public class ElementRelation implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
