@@ -1,5 +1,6 @@
 package com.easyleancode.geometry.apps;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.easyleancode.geometry.R;
 import com.easyleancode.geometry.adapters.ExpandableAdapter;
+import com.easyleancode.geometry.models.ELGeo;
+import com.easyleancode.geometry.models.ElementRelation;
 import com.easyleancode.geometry.models.Shape;
 import com.easyleancode.geometry.utils.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayoutManager layoutManager;
     ExpandableAdapter expandableAdapter;
-    List<Object> collections;
+    ArrayList<Serializable> collections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
         initRecycleView();
-    }
-
-    private void setGeometry() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.geometry_view, new DrawingFragment())
-                .disallowAddToBackStack().commit();
     }
 
     @Override
@@ -65,7 +63,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_view) {
+            ArrayList<Serializable> collections = expandableAdapter.getCollections();
+            if (collections == null || collections.isEmpty()) {
+                Toast.makeText(this, getString(R.string.noti_please_input_one), Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(this, ShapeActivity.class);
+                intent.putExtra(ShapeActivity.COLLECTION, new ELGeo(collections));
+                startActivity(intent);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -80,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         setExpandableAdapter(collections);
     }
 
-    private void setExpandableAdapter(List<Object> collections) {
+    private void setExpandableAdapter(ArrayList<Serializable> collections) {
         if (expandableAdapter == null) {
             expandableAdapter = new ExpandableAdapter(this, collections);
             recyclerShape.setAdapter(expandableAdapter);
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
     protected void addElement(View view) {
         switch (view.getId()) {
             case R.id.angle:
+                collections.add(new ElementRelation());
                 break;
             case R.id.surface:
                 break;
