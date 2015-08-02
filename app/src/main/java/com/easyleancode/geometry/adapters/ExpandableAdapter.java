@@ -70,29 +70,44 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
                 }
             });
             shapeViewHolder.shapeType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int adapterPosition, long id) {
-                    shape.setType(shapeTypeAdapter.getItem(adapterPosition));
-                    ElementAdapter elementAdapter = new ElementAdapter(context, shape.getElements(), new ElementAdapter.OnChangeElementListener() {
+                ElementAdapter elementAdapter;
+
+                protected void notifyDataSetChanged(ElementAdapter adapter) {
+                    final int adapterCount = adapter.getCount();
+                    shapeViewHolder.elementLayout.removeAllViews();
+                    for (int i = 0; i < adapterCount; i++) {
+                        View item = adapter.getView(i, null, null);
+                        shapeViewHolder.elementLayout.addView(item);
+                    }
+                }
+
+                protected void notifyDataSetChanged(List<ElementRelation> elements) {
+                    elementAdapter = initElementAdapter(elements);
+                    notifyDataSetChanged(elementAdapter);
+                }
+
+                protected ElementAdapter initElementAdapter(List<ElementRelation> elements) {
+                    ElementAdapter elementAdapter = new ElementAdapter(context, elements, new ElementAdapter.OnChangeElementListener() {
                         @Override
                         public void onAddElement(View view, int count, List<ElementRelation> elements) {
                             shapeViewHolder.elementLayout.addView(view, count - 1);
-                            shape.setElements(elements);
+                            notifyDataSetChanged(elements);
                         }
 
                         @Override
-                        public void onRemoveElement(int position,List<ElementRelation> elements) {
+                        public void onRemoveElement(int position, List<ElementRelation> elements) {
                             shapeViewHolder.elementLayout.removeViewAt(position);
-                            shape.setElements(elements);
+                            notifyDataSetChanged(elements);
                         }
                     });
-                    final int adapterCount = elementAdapter.getCount();
-                    shapeViewHolder.elementLayout.removeAllViews();
-                    for (int i = 0; i < adapterCount; i++) {
-                        View item = elementAdapter.getView(i, null, null);
-                        shapeViewHolder.elementLayout.addView(item);
-                    }
-                    shape.setElements(elementAdapter.getElements());
+                    return elementAdapter;
+                }
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int adapterPosition, long id) {
+                    shape.setType(shapeTypeAdapter.getItem(adapterPosition));
+                    elementAdapter = initElementAdapter(shape.getElements());
+                    notifyDataSetChanged(elementAdapter);
                 }
             });
             shapeViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -110,8 +125,19 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
             });
         } else {
             ElementRelation elementRelation = (ElementRelation) object;
-            ElementViewHolder elementViewHolder = (ElementViewHolder) viewHolder;
-
+            final ElementViewHolder elementViewHolder = (ElementViewHolder) viewHolder;
+            elementViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    collections.remove(position);
+                    addedPosition = -1;
+                    if (getItemCount() == 0) {
+                        ((MainActivity) context).onCollectionEmpty();
+                    }
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, getItemCount());
+                }
+            });
         }
     }
 
@@ -164,13 +190,16 @@ public class ExpandableAdapter extends RecyclerView.Adapter<ViewHolder> {
         EditText relationship;
         @Bind(R.id.target)
         EditText target;
-        @Bind(R.id.text_plus)
-        EditText textPlus;
+        @Bind(R.id.right_view)
+        LinearLayout optionView;
         @Bind(R.id.value)
         EditText value;
+        @Bind(R.id.thr_delete)
+        ImageView btnDelete;
 
         public ElementViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
